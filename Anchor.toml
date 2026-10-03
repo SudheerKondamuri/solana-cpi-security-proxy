@@ -1,0 +1,20 @@
+[toolchain]
+package_manager = "yarn"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+proxy_program = "2em2HY5wgQa1tSz5xQbExEUDNWWBA52KGVzEWNH7oXD7"
+target_program = "C8dbWuj9rvbUhR4v6Gkh3va8tpQrYvcp7qgE6shYzAoQ"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "./scripts/run-test.sh"
