@@ -1,0 +1,11 @@
+.anchor
+.DS_Store
+target/debug
+target/release
+target/sbf-solana-solana
+**/*.rs.bk
+node_modules
+test-ledger
+.yarn
+dist
+.env
