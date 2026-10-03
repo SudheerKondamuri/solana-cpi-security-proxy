@@ -1,0 +1,17 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    bzip2 \
+    ca-certificates \
+    libudev-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sh -c "$(curl -sSfL https://release.anza.xyz/v2.1.21/install)"
+ENV PATH="/root/.local/share/solana/install/active_release/bin:${PATH}"
+
+EXPOSE 8899 8900 9900 8001 8002 8003 8004 8005 8006 8007 8008 8009
+
+CMD ["solana-test-validator", "--reset", "--bind-address", "0.0.0.0", "--rpc-port", "8899", "--quiet"]
