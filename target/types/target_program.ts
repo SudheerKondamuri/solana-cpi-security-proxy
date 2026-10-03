@@ -1,0 +1,178 @@
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/target_program.json`.
+ */
+export type TargetProgram = {
+  "address": "C8dbWuj9rvbUhR4v6Gkh3va8tpQrYvcp7qgE6shYzAoQ",
+  "metadata": {
+    "name": "targetProgram",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Target Program (Program B) - Vault with authority-signed updates"
+  },
+  "instructions": [
+    {
+      "name": "initializeVault",
+      "docs": [
+        "Initializes a new vault account with zero value and sets the authority.",
+        "The authority PDA (from the proxy program) will be the only account",
+        "allowed to update the vault."
+      ],
+      "discriminator": [
+        48,
+        191,
+        163,
+        44,
+        71,
+        129,
+        63,
+        164
+      ],
+      "accounts": [
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "The authority that will control this vault (expected to be the Proxy PDA).",
+            "valid public key — validation happens at update time via signer checks."
+          ]
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "updateVault",
+      "docs": [
+        "Updates the vault value. Requires the authority to be a signer.",
+        "This is the critical security boundary: only the Proxy PDA (which signed",
+        "via CPI signer seeds) can call this successfully."
+      ],
+      "discriminator": [
+        67,
+        229,
+        185,
+        188,
+        226,
+        11,
+        210,
+        60
+      ],
+      "accounts": [
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "The authority that controls this vault. Must be a Signer — this is",
+            "enforced by the Signer<'info> type. In CPI context, only a PDA",
+            "with correct signer seeds can satisfy this."
+          ],
+          "signer": true,
+          "relations": [
+            "vault"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "newValue",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "vault",
+      "discriminator": [
+        211,
+        8,
+        232,
+        43,
+        2,
+        152,
+        117,
+        119
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "vault",
+      "docs": [
+        "The vault state account."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "The public key of the authority allowed to update this vault."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "value",
+            "docs": [
+              "The stored value."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+};
