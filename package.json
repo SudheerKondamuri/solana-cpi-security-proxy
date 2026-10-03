@@ -1,0 +1,32 @@
+{
+  "name": "solana-cpi-security-proxy",
+  "version": "1.0.0",
+  "description": "Solana CPI Security Proxy and Relayer with Strict Trust Boundaries",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "anchor test --skip-build",
+    "test:happy": "mocha -r ts-node/register --timeout 1000000 tests/happy_path.ts",
+    "test:attacks": "mocha -r ts-node/register --timeout 1000000 tests/attacks.ts",
+    "test:attack-target": "mocha -r ts-node/register --timeout 1000000 tests/attacks.ts --grep \"arbitrary target\"",
+    "test:attack-forged": "mocha -r ts-node/register --timeout 1000000 tests/attacks.ts --grep \"forged account\"",
+    "test:attack-signer": "mocha -r ts-node/register --timeout 1000000 tests/attacks.ts --grep \"missing signer\"",
+    "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
+    "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.0",
+    "@solana/web3.js": "^1.98.0",
+    "bn.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.0",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.0",
+    "chai": "^4.3.4",
+    "mocha": "^10.8.2",
+    "prettier": "^2.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
