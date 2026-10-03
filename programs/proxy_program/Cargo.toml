@@ -1,0 +1,21 @@
+[package]
+name = "proxy-program"
+version = "0.1.0"
+description = "Proxy Program (Program A) - CPI Security Proxy with remaining_accounts validation"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "proxy_program"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = "=0.31.0"
+target-program = { path = "../target_program", features = ["cpi"] }
